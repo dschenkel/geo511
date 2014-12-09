@@ -8,9 +8,14 @@ month <- c("jana","janb","feba","febc","mara","marb","apra","aprb","maya","mayb"
 
 
 
-file.name = paste("~/Documents/Uni/Masterarbeit/LAIre/Global-0.5x0.5.analysis.1985.nc", sep="") 
+file.name = paste("~/Documents/Uni/Masterarbeit/LAIre/Global-0.5x0.5.analysis.1987.nc", sep="") 
 file <- open.ncdf(file.name)
 file.lai <- get.var.ncdf(file, "LAI")
+fillvalue <- att.get.ncdf(file, "LAI", "_FillValue")
+fillvalue
+file.lai[file.lai == fillvalue$value] <- NA
+lamin = which.min(file.lai)
+file.lai[lamin]
 is.array(file.lai)
 t <- length(get.var.ncdf(file,"time"))
 
