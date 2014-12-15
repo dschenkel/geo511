@@ -42,7 +42,17 @@ month.name = list("jan", "feb","mar","apr","may","jun","jul","aug",
 for (year in 1984:2011) {
 	for (i in 1:12) {
 	  #month
-  
+	  n
+	  install.packages("rgeos", repos="http://R-Forge.R-project.org")
+	  
+	  library(sp)
+	  library(raster)
+	  library(ncdf)
+	  library(fields)
+	  library(rgdal)
+	  year <- 2001
+	  
+	  i <- 5
 	  file.name = paste("~/Documents/Uni/Masterarbeit/LAIv3g/raw_data/avhrrbulai_v01/AVHRRBUVI01.", year, month.name[i], "a.abl", sep="") 
 	  binread = readBin(con=file.name, what="integer", n=9331200, size=1, signed=F, endian="little")
 	  # covert binary object into a matrix using specifications from the metadata
@@ -63,7 +73,7 @@ for (year in 1984:2011) {
 	  #projection(rstr) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 	  rstr.new = resample(rstr, raster(nrow=720, ncol=360), method='bilinear')
 	  #plot(rstr)
-	  writeRaster(rstr.new, filename=file.name, format="ENVI", overwrite=TRUE)
+	  writeRaster(rstr.new, filename=file.name, format="CDF", overwrite=TRUE)
 
 	  #plot(rstr)
 	  rm(file.name,mtrx, rstr.new, rstr)

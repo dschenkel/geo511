@@ -18,7 +18,7 @@ str(d)
 mean(d)
 #max(d[,,"4"])
 
-d[290,41,]
+image.plot(d["5,25","5,25",])
 d.max <- apply(d,c(1,2),max)
 image.plot(d.lon, d.lat, d.max)
 #library(ggplot2)
