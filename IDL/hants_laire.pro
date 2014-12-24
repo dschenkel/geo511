@@ -4,13 +4,13 @@ pro hants_laire
   outdir    = '/Users/davidschenkel/Documents/Uni/Masterarbeit/LAIre/hantsout/'
   mask      = '/Users/davidschenkel/Documents/Uni/Masterarbeit/watermask/watermask.envi'
 
-  for year=1982,2011 DO BEGIN
+  for year=2005,2011 DO BEGIN
     
-   filename       = inputdir + 'Global-0.5x0.5.analysis.' + STRTRIM(year,2) + '_rot.envi'
-   output_inter   = outdir + 'inter/inter' + STRTRIM(year,2)
-   out_four       = outdir + 'fourier/fourier' + STRTRIM(year,2)
-   output_smooth  = outdir + 'smoothed/smoothed' + STRTRIM(year,2)
-   out_stat       = outdir + 'status/status' + STRTRIM(year,2)
+   filename   = inputdir + 'Global-0.5x0.5.analysis.' + STRTRIM(year,2) + '_rot.envi'
+   out_inter  = outdir + 'inter/inter' + STRTRIM(year,2)
+   out_four   = outdir + 'fourier/fourier' + STRTRIM(year,2)
+   out_smooth = outdir + 'smoothed/smoothed' + STRTRIM(year,2)
+   out_stat   = outdir + 'status/status' + STRTRIM(year,2)
 
 
    cgi_hants, $
@@ -23,8 +23,8 @@ pro hants_laire
     mask_if   = mask, $
     hants_of  = out_four, $
     status_of = out_stat, $
-    smooth_of = output_smooth, $
-    interp_of = output_inter
+    smooth_of = out_smooth, $
+    interp_of = out_inter
     
   endfor
 end

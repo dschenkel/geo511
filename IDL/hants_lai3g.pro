@@ -6,11 +6,11 @@ pro hants_lai3g
 
   for year=1982,2011 DO BEGIN
     
-   filename       = inputdir + "LAIv3g_" + STRTRIM(year,2) + '_0.5'
-   output_inter   = folder_output + 'inter/inter' + STRTRIM(year,2)
-   out_four       = folder_output + 'fourier/fourier' + STRTRIM(year,2)
-   output_smooth  = folder_output + 'smoothed/smoothed' + STRTRIM(year,2)
-   out_stat       = folder_output + 'status/status' + STRTRIM(year,2)
+   filename   = inputdir + "LAIv3g_" + STRTRIM(year,2) + '_0.5'
+   out_inter  = folder_output + 'inter/inter' + STRTRIM(year,2)
+   out_four   = folder_output + 'fourier/fourier' + STRTRIM(year,2)
+   out_smooth = folder_output + 'smoothed/smoothed' + STRTRIM(year,2)
+   out_stat   = folder_output + 'status/status' + STRTRIM(year,2)
 
 
    cgi_hants, $
@@ -23,8 +23,8 @@ pro hants_lai3g
     mask_if   = mask, $
     hants_of  = out_four, $
     status_of = out_stat, $
-    smooth_of = output_smooth, $
-    interp_of = output_inter
+    smooth_of = out_smooth, $
+    interp_of = out_inter
     
   endfor
 end
