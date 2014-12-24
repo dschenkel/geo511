@@ -1,10 +1,13 @@
 library(caTools)
 
-year = 1983
+for (year in 1982:2011) {
+	#filename = paste("~/Documents/Uni/Masterarbeit/LAIv3g/LAIv3g_8211_INT_BSQ", sep="") 
 
-filename = paste("~/Documents/Uni/Masterarbeit/LAIv3g/yearly/LAIv3g_",year, sep="") 
+	filename = paste("~/Documents/Uni/Masterarbeit/LAIv3g/yearly/LAIv3g_",year, sep="") 
 
-mtrx = read.ENVI(filename, headerfile=paste(filename, ".hdr", sep="")) 
-mtrx[mtrx == 250] <-- NA
+	mtrx = read.ENVI(filename, headerfile=paste(filename, ".hdr", sep="")) 
+	mtrx[mtrx == 250] <-- 0
 
-write.ENVI (mtrx, paste(filename,"_nodata", sep=""), interleave = "bsq" ) 
+	write.ENVI(mtrx, paste(filename,"_nodata", sep=""), interleave = "bsq" ) 
+	rm(mtrx)
+}
