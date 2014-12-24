@@ -11,12 +11,13 @@ library(rgdal)
 
 
 
-#file.name = paste("~/Documents/Uni/Masterarbeit/LAIv3g/raw_data/avhrrbulai_v01/AVHRRBUVI01.1981auga.abl", sep="") 
-#binread = readBin(con=file.name, what="integer", n=9331200, size=1, signed=F, endian="little")
+
+file.name = paste("~/Documents/Uni/Masterarbeit/LAIv3g/raw_data/avhrrbulai_v01/AVHRRBUVI01.1993auga.abl", sep="") 
+binread = readBin(con=file.name, what="integer", n=9331200, size=1, signed=F, endian="little")
 # covert binary object into a matrix using specifications from the metadata
-#mtrx = matrix(binread, nrow=2160, ncol=4320, byrow=F)
+mtrx = matrix(binread, nrow=2160, ncol=4320, byrow=F)
 # set NA values (according to the metadata n=250 is a NULL value)
-#mtrx[mtrx == 250] <-- NA
+mtrx[mtrx == 250] <-- 0
 
 # multiplication by 0.1 for LAI and 0.01 for FAPAR sets the actual value
 #mtrx = mtrx*0.1
@@ -24,12 +25,12 @@ library(rgdal)
 #plt[,,2*i-1] = mtrx
 #abind(frm,mtrx,rev.along=0)  
 # convert to matrix to a raster object
-#rstr = raster(mtrx)
-#extent(rstr) <- extent(c(-180, 180, -90, 90))
-#projection(rstr) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+rstr = raster(mtrx)
+extent(rstr) <- extent(c(-180, 180, -90, 90))
+projection(rstr) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 #rstr.new = resample(rstr, raster(nrow=720, ncol=360), method='bilinear')
 
-#writeRaster(rstr.new, filename="~/Documents/Uni/Masterarbeit/LAIv3g/raw_data/avhrrbulai_v01/AVHRRBUVI01.1981auga.envi", format="ENVI", overwrite=TRUE)
+writeRaster(rstr, filename="~/Documents/Uni/Masterarbeit/LAIv3g/raw_data/avhrrbulai_v01/AVHRRBUVI01.1993auga.envi", format="ENVI", overwrite=TRUE)
 
 month = list("01","02","03","04","05","06","07","08","09","10","11","12")
 month.name = list("jan", "feb","mar","apr","may","jun","jul","aug",
@@ -42,17 +43,7 @@ month.name = list("jan", "feb","mar","apr","may","jun","jul","aug",
 for (year in 1984:2011) {
 	for (i in 1:12) {
 	  #month
-	  n
-	  install.packages("rgeos", repos="http://R-Forge.R-project.org")
-	  
-	  library(sp)
-	  library(raster)
-	  library(ncdf)
-	  library(fields)
-	  library(rgdal)
-	  year <- 2001
-	  
-	  i <- 5
+  
 	  file.name = paste("~/Documents/Uni/Masterarbeit/LAIv3g/raw_data/avhrrbulai_v01/AVHRRBUVI01.", year, month.name[i], "a.abl", sep="") 
 	  binread = readBin(con=file.name, what="integer", n=9331200, size=1, signed=F, endian="little")
 	  # covert binary object into a matrix using specifications from the metadata
@@ -73,7 +64,7 @@ for (year in 1984:2011) {
 	  #projection(rstr) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 	  rstr.new = resample(rstr, raster(nrow=720, ncol=360), method='bilinear')
 	  #plot(rstr)
-	  writeRaster(rstr.new, filename=file.name, format="CDF", overwrite=TRUE)
+	  writeRaster(rstr.new, filename=file.name, format="ENVI", overwrite=TRUE)
 
 	  #plot(rstr)
 	  rm(file.name,mtrx, rstr.new, rstr)
