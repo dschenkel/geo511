@@ -12,8 +12,9 @@ pro resize
   for year=1984,2011 DO BEGIN
 
     raster = e.OpenRaster(rootdir + "LAIv3g_" + STRTRIM(year,2) + "_nodata")
-    NewRaster = raster.Resize(Raster, DIMENSIONS=[720,360], METHOD='Bilinear')
-
+    NewRaster = ENVIResampleRaster(Raster, $
+  DIMENSIONS=[720,360], $
+  METHOD='Bilinear')
     outfile = rootdir + "LAIv3g_" + STRTRIM(year, 2) + "_0.5"
     print,outfile
     NewRaster.Export, outfile, 'ENVI'
