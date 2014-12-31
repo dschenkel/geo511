@@ -1,16 +1,16 @@
 pro hants_lai3g
 
-  inputdir  = '/Users/davidschenkel/Documents/Uni/Masterarbeit/LAIv3g/yearly/'
-  outdir    = '/Users/davidschenkel/Documents/Uni/Masterarbeit/LAIv3g/hantsout/'
-  mask      = '/Users/davidschenkel/Documents/Uni/Masterarbeit/watermask/watermask.envi'
+  indir   = '/Users/davidschenkel/Documents/Uni/Masterarbeit/LAIv3g/yearly/'
+  outdir  = '/Users/davidschenkel/Documents/Uni/Masterarbeit/LAIv3g/hantsout/'
+  mask    = '/Users/davidschenkel/Documents/Uni/Masterarbeit/watermask/watermask.envi'
 
-  for year=1982,2011 DO BEGIN
+  for year=1989,1990 DO BEGIN
     
-   filename   = inputdir + "LAIv3g_" + STRTRIM(year,2) + '_0.5'
-   out_inter  = folder_output + 'inter/inter' + STRTRIM(year,2)
-   out_four   = folder_output + 'fourier/fourier' + STRTRIM(year,2)
-   out_smooth = folder_output + 'smoothed/smoothed' + STRTRIM(year,2)
-   out_stat   = folder_output + 'status/status' + STRTRIM(year,2)
+   filename   = indir + "LAIv3g_" + STRTRIM(year,2) + '_0.5'
+   out_inter  = outdir + 'inter/inter' + STRTRIM(year,2)
+   out_four   = outdir + 'fourier/fourier' + STRTRIM(year,2)
+   out_smooth = outdir + 'smoothed/smoothed' + STRTRIM(year,2)
+   out_stat   = outdir + 'status/status' + STRTRIM(year,2)
 
 
    cgi_hants, $

@@ -4,7 +4,7 @@ pro hants_laire
   outdir    = '/Users/davidschenkel/Documents/Uni/Masterarbeit/LAIre/hantsout/'
   mask      = '/Users/davidschenkel/Documents/Uni/Masterarbeit/watermask/watermask.envi'
 
-  for year=2005,2011 DO BEGIN
+  for year=1990,1990 DO BEGIN
     
    filename   = inputdir + 'Global-0.5x0.5.analysis.' + STRTRIM(year,2) + '_rot.envi'
    out_inter  = outdir + 'inter/inter' + STRTRIM(year,2)
