@@ -6,9 +6,14 @@ plotpixel <- function(ts, scene.sos, value.sos, scene.eos, value.eos) {
 
 	# Graph cars using a y axis that ranges from 0 to 12
 	plot(scene.sos, value.sos, col="blue", ylim=c(0,max(ts)), xlim=c(0,length(ts)))
+	text(scene.sos+1, value.sos,"SOS")
 	points(scene.eos,value.eos, col="green")
+	text(scene.eos+1, value.eos,"EOS")
 	# Graph trucks with red dashed line and square points
 	lines(ts, type="o", col="red")
+	
+	legend(length(ts)-10, max((ts)), c("SOS","EOS"), cex=0.8, 
+	   col=c("blue","green"));
 }
 
 data.rootdir = "~/Documents/Uni/Masterarbeit/"
@@ -91,22 +96,33 @@ for(year in year.min:year.max) {
 				else {
 					val.min.sos = data[i,j,index.min.sos]					
 				}
-				val.max.sos = data[i,j,index.max.sos]
+				if(index.max.sos>data.dims[3]) {
+					val.max.sos = data.ny[i,j,1]
+				}
+				else {
+					val.max.sos = data[i,j,index.max.sos]					
+				}
 			
-				index.act.sos = index.min.sos + (val.max.sos-val.act)/(val.max.sos-val.min.sos)
+				index.act.sos = index.min.sos + (val.act-val.min.sos)/(val.max.sos-val.min.sos)
 				data.out.sos[i,j] =  scenelength*index.act.sos-scenelength/2
 			
 			
-				val.min.eos = data[i,j,index.min.eos]
-				if(index.min.eos == data.dims[3]) {
-					index.max.eos = data.ny[i,j,1]
+				if(index.min.eos==0) {
+					val.min.eos = data.ly[i,j,data.dims[3]]	
 				}
 				else {
-					val.max.eos = data[i,j,index.max.eos]
+					val.min.eos = data[i,j,index.min.eos]					
 				}
-				index.act.eos = index.min.eos + (val.max.eos-val.act)/(val.max.eos-val.min.eos) 
+				if(index.max.eos>data.dims[3]) {
+					val.max.eos = data.ny[i,j,1]
+				}
+				else {
+					val.max.eos = data[i,j,index.max.eos]					
+				}
+				
+				index.act.eos = index.min.eos + (val.act-val.min.eos)/(val.max.eos-val.min.eos) 
 				data.out.eos[i,j] =  scenelength*index.act.eos-scenelength/2
-				if(i==104 && j == 163 && year == 1989) {
+				if(i==246 && j == 231 && year == 1989) {
 					print(index.act.sos)
 					print(data.out.sos[i,j])
 					plotpixel(data[i,j,],index.act.sos,val.act,index.act.eos,val.act)
@@ -115,8 +131,8 @@ for(year in year.min:year.max) {
 		}
 	}
 	
-	write.ENVI(data.out.sos,paste(data.rootdir,lainame,"/LSPout/",year,"_sos_MP",sep=""))
-	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",year,"_eos_MP",sep=""))
+	write.ENVI(data.out.sos,paste(data.rootdir,lainame,"/LSPout/",year,"_sos_MI",sep=""))
+	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",year,"_eos_MI",sep=""))
 	rm(data.out.eos, data.out.sos, data.ny, data.ly, data.midpoint, data.meta)
 }	
 	
