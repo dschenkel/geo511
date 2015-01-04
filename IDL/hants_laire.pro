@@ -25,6 +25,10 @@ pro hants_laire
     status_of = out_stat, $
     smooth_of = out_smooth, $
     interp_of = out_inter
-    
+	
+	
+	
+	
+	
   endfor
 end

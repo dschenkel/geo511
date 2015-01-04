@@ -1,4 +1,4 @@
-#library(fields)
+library(abind)
 library(caTools)
 library(ncdf4)
 
@@ -29,6 +29,8 @@ for(year in year.min:year.max) {
 	
 	data.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year, sep="") 
 	data = read.ENVI(data.name)
+	
+	#set year before and year after. if the year is the first/last year, use the current year as the year before/after
 	if(year==year.min) {
 		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.min, sep="") 	
 	}
@@ -45,12 +47,23 @@ for(year in year.min:year.max) {
 	}
 	data.ny = read.ENVI(data.name)
 	
+	
 	data.max <- apply(data,c(1,2),max)
 	data.min <- apply(data,c(1,2),min)
 	data.delta <- data.max-data.min
 	data.midpoint <- data.min + data.delta/2
-	data.dims = dim(data)
 	
+	
+	data.dims = dim(data)
+	data.shifted = abind(data[,,2:data.dims[3]],data.ny[,,1]) 
+
+
+	#print(data.shifted)
+	data.shifted = data-data.shifted
+	
+	#  get index of max inflection 
+	data.shifted.max = apply(data.shifted,c(1,2),which.max)
+	print((data.shifted.max))
 	#data.aboveMP <- apply(data[73,378,], 3, function(x)  x > data.midpoint[73,378])
 	#data.aboveMP = data[73,378,] > data.midpoint[73,378]
 	#data.aboveMP
@@ -75,7 +88,7 @@ for(year in year.min:year.max) {
 					next()
 				}
 				scenelength = data.meta.time/data.dims[3];
-				val.act = data.midpoint[i,j]
+				val.act = (data[i,j,data.shifted.max[i,j]]+data[i,j,data.shifted.max[i,j]+1])/2
 				
 				#simplified assumption: height of season in january-ish (southern hem)
 				if(data[i,j,1]>data.midpoint[i,j]) {

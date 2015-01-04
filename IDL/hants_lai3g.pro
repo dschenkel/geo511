@@ -14,9 +14,9 @@ pro hants_lai3g
 
 
    cgi_hants, $
-    fet = 1, $
+    fet = 7, $
     freqs = [0,1,2,3], $
-    range = [-2,8], $
+    range = [-2,80], $
     tat = 10, $
     iMAX = 6, $
     data_if   = filename, $
