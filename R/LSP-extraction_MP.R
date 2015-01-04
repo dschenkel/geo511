@@ -20,8 +20,8 @@ data.rootdir = "~/Documents/Uni/Masterarbeit/"
 data.mask <- read.ENVI(paste(data.rootdir,"watermask/watermask.envi",sep=""))
 lainame= "LAIv3g"
 mindelta = 15
-year.min = 1992
-year.max = 1994
+year.min = 1988
+year.max = 1990
 
 for(year in year.min:year.max) {
 	data.meta <- nc_open(paste(data.rootdir, "LAIre/raw_data/Global-0.5x0.5.analysis.",year,".nc",sep=""))
@@ -136,14 +136,14 @@ for(year in year.min:year.max) {
 				}
 				index.act.eos = index.min.eos + (val.act.eos-val.min.eos)/(val.max.eos-val.min.eos) 
 				data.out.eos[i,j] =  scenelength*index.act.eos-scenelength/2
-				if(i==104 && j == 163 && year == 1995) {
+				if(i == 99 && j == 201 && year == 1989) {
 					print(val.act.sos)
 					print(val.act.eos)
 					
-					#print(data.out.sos[i,j])
+					print(data.out.sos[i,j])
 					plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.eos)
 				}
-				if(i == 231 && j == 420 && year == 1993) {
+				if(i == 231 && j == 420 && year == 1989) {
 					print(val.act.sos)
 					print(val.act.eos)
 					

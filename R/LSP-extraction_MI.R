@@ -1,7 +1,3 @@
-##########
-#########   TO DO : if/then für data.shifted.max out of bounds!
-###############
-
 library(abind)
 library(caTools)
 library(ncdf4)
@@ -16,16 +12,15 @@ plotpixel <- function(ts, scene.sos, value.sos, scene.eos, value.eos) {
 	# Graph trucks with red dashed line and square points
 	lines(ts, type="o", col="red")
 	
-	legend(length(ts)-10, max((ts)), c("SOS","EOS"), cex=0.8, 
-	   col=c("blue","green"));
 }
 
 data.rootdir = "~/Documents/Uni/Masterarbeit/"
 data.mask <- read.ENVI(paste(data.rootdir,"watermask/watermask.envi",sep=""))
 lainame= "LAIv3g"
+mindelta = 15
 
-year.min = 1989
-year.max = 1989
+year.min = 1988
+year.max = 1990
 
 for(year in year.min:year.max) {
 	data.meta <- nc_open(paste(data.rootdir, "LAIre/raw_data/Global-0.5x0.5.analysis.",year,".nc",sep=""))
@@ -41,28 +36,28 @@ for(year in year.min:year.max) {
 	else {
 		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year-1, sep="") 
 	}
-	data.ly = read.ENVI(data.name)
+	data.ly = read.ENVI(data.ly.name)
 	
 	if(year==year.max) {
 		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.max, sep="") 	
 	}
 	else {
-		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year-1, sep="") 
+		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year+1, sep="") 
 	}
-	data.ny = read.ENVI(data.name)
+	data.ny = read.ENVI(data.ny.name)
 	
 	
 	data.max <- apply(data,c(1,2),max)
 	data.min <- apply(data,c(1,2),min)
 	data.delta <- data.max-data.min
-	data.midpoint <- data.min + data.delta/2
+	#data.midpoint <- data.min + data.delta/2
 	
 	
 	data.dims = dim(data)
 	data.shifted = abind(data[,,2:data.dims[3]],data.ny[,,1]) 
 
 	#print(data.shifted)
-	data.shifted = data-data.shifted
+	data.shifted = data.shifted-data
 	
 	#  get index of max inflection 
 	data.shifted.max = apply(data.shifted,c(1,2),which.max)
@@ -85,18 +80,28 @@ for(year in year.min:year.max) {
 		for(j in 1:data.dims[2]) {
 			if(data.mask[i,j] == 1) {
 				#intra-annual variation too small
-				if(data.delta[i,j]<0.5) {
+				if(data.delta[i,j]<mindelta) {
 					next()
 				}
 				scenelength = data.meta.time/data.dims[3];
 				
 				
+				
+				index.min.sos = data.shifted.max[i,j]
+				index.act.sos = index.min.sos + 0.5
 				#middle between point before and after max inflection
-				val.act.sos = (data[i,j,data.shifted.max[i,j]]+data[i,j,data.shifted.max[i,j]+1])/2
+				val.min.sos = data[i,j,index.min.sos]
+				
+				if(data.shifted.max[i,j] == data.dims[3]) {
+					val.max.sos = data.ny[i,j,1] 
+				}
+				else {
+					val.max.sos = data[i,j,data.shifted.max[i,j]+1]					
+				}
+				val.act.sos = (val.min.sos+val.max.sos)/2
 			
-				index.act.sos = data.shifted.max[i,j]
 				#no need to subtract scene-length/2 b.c. max inflection is at index+0.5; so no index+0.5, no scene-scenelength/2 
-				data.out.sos[i,j] =  scenelength*index.act.sos
+				data.out.sos[i,j] = scenelength*(index.min.sos)
 				
 				
 				if(data[i,j,1]>val.act.sos) {  #~southern hem
@@ -104,12 +109,17 @@ for(year in year.min:year.max) {
 					data.ly.dims = dim(data.ly)
 					data.ly.shifted = abind(data[i,j,2:data.ly.dims[3]],data[i,j,1]) 
 					#print(data.shifted)
-					data.ly.shifted = data.ly[i,j,]-data.ly.shifted
+					data.ly.shifted = data.ly.shifted-data.ly[i,j,]
 	
-					#  get index of max inflection 
+					#  get index of max inflection
 					data.ly.shifted.max = which.max(data.ly.shifted)
-					print(data.ly.shifted.max)
-					val.act.eos <- (data.ly[i,j,data.ly.shifted.max]+data.ly[i,j,data.ly.shifted.max+1])/2
+					#print(data.ly.shifted.max)
+					if(data.ly.shifted.max==data.ly.dims[3]){
+						val.act.eos <- (data.ly[i,j,data.ly.shifted.max]+data[i,j,1])/2
+					}
+					else {
+						val.act.eos <- (data.ly[i,j,data.ly.shifted.max]+data.ly[i,j,data.ly.shifted.max+1])/2
+					}
 					index.max.eos <- min(which(data[i,j,] <= val.act.eos))
 					index.min.eos <- index.max.eos-1					
 					
@@ -137,14 +147,23 @@ for(year in year.min:year.max) {
 				
 				index.act.eos = index.min.eos + (val.act.eos-val.min.eos)/(val.max.eos-val.min.eos) 
 				#print(val.act.eos)
-				data.out.eos[i,j] =  scenelength*index.act.eos
+				data.out.eos[i,j] =  scenelength*(index.act.eos-0.5)
 				
 				
-				if(i==246 && j == 231 && year == 1989) {
-					print(val.act.sos)
-					print(val.act.eos)
-					plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.sos)
-				}
+					if(i==99 && j == 201 && year == 1989) {
+						print(val.act.sos)
+						print(val.act.eos)
+					
+						#print(data.out.sos[i,j])
+						plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.eos)
+					}
+					if(i == 231 && j == 420 && year == 1989) {
+						print(val.act.sos)
+						print(val.act.eos)
+					
+						#print(data.out.sos[i,j])
+						plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.eos)
+					}
 			}
 		}
 	}
@@ -153,14 +172,3 @@ for(year in year.min:year.max) {
 	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",year,"_eos_MI",sep=""))
 	rm(data.out.eos, data.out.sos, data.ny, data.ly, data.midpoint, data.meta)
 }	
-	
-	#data.ts = ts(data.midpoint, start=c(year,1), frequency=24)
-	#data.ts
-	#write.ENVI(data.min,paste("~/Documents/Uni/Masterarbeit/LAIv3g/LSP_extract/",year, "_min",sep=""))
-	#write.ENVI(data.max,paste("~/Documents/Uni/Masterarbeit/LAIv3g/LSP_extract/",year, "_max", sep=""))
-	#write.ENVI(data.midpoint,paste("~/Documents/Uni/Masterarbeit/LAIv3g/LSP_extract/",year, "_midpoint", sep=""))
-	#data[150:160,350:360,]
-
-	#data.firstocc = apply(data[150:160,350:360,], c(1,2), function(x) match(x>data.midpoint, x))
-	#data.firstocc
-	#write.ENVI(data.firstocc, paste("~/Documents/Uni/Masterarbeit/LAIv3g/LSP_extract/", year, "_firstocc", sep="") )
