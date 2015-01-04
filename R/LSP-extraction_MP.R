@@ -136,13 +136,13 @@ for(year in year.min:year.max) {
 				}
 				index.act.eos = index.min.eos + (val.act.eos-val.min.eos)/(val.max.eos-val.min.eos) 
 				data.out.eos[i,j] =  scenelength*index.act.eos-scenelength/2
-			#	if(i==104 && j == 163 && year == 1995) {
-			#		print(val.act.sos)
-			#		print(val.act.eos)
+				if(i==104 && j == 163 && year == 1995) {
+					print(val.act.sos)
+					print(val.act.eos)
 					
 					#print(data.out.sos[i,j])
-			#		plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.eos)
-			#	}
+					plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.eos)
+				}
 				if(i == 231 && j == 420 && year == 1993) {
 					print(val.act.sos)
 					print(val.act.eos)
