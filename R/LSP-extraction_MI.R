@@ -1,3 +1,7 @@
+##########
+#########   TO DO : if/then für data.shifted.max out of bounds!
+###############
+
 library(abind)
 library(caTools)
 library(ncdf4)
@@ -57,16 +61,13 @@ for(year in year.min:year.max) {
 	data.dims = dim(data)
 	data.shifted = abind(data[,,2:data.dims[3]],data.ny[,,1]) 
 
-
 	#print(data.shifted)
 	data.shifted = data-data.shifted
 	
 	#  get index of max inflection 
 	data.shifted.max = apply(data.shifted,c(1,2),which.max)
-	print((data.shifted.max))
-	#data.aboveMP <- apply(data[73,378,], 3, function(x)  x > data.midpoint[73,378])
-	#data.aboveMP = data[73,378,] > data.midpoint[73,378]
-	#data.aboveMP
+
+
 	
 	data.out.sos <- array(data=NaN, dim=c(data.dims[1],data.dims[2]))
 	data.out.eos <- array(data=NaN, dim=c(data.dims[1],data.dims[2]))
@@ -88,38 +89,37 @@ for(year in year.min:year.max) {
 					next()
 				}
 				scenelength = data.meta.time/data.dims[3];
-				val.act = (data[i,j,data.shifted.max[i,j]]+data[i,j,data.shifted.max[i,j]+1])/2
 				
-				#simplified assumption: height of season in january-ish (southern hem)
-				if(data[i,j,1]>data.midpoint[i,j]) {
-					index.min.sos <- max(which(data[i,j,] <= val.act))
-					index.max.sos <- index.min.sos+1
-					index.max.eos <- min(which(data[i,j,] <= val.act))
-					index.min.eos <- index.max.eos-1
+				
+				#middle between point before and after max inflection
+				val.act.sos = (data[i,j,data.shifted.max[i,j]]+data[i,j,data.shifted.max[i,j]+1])/2
+			
+				index.act.sos = data.shifted.max[i,j]
+				#no need to subtract scene-length/2 b.c. max inflection is at index+0.5; so no index+0.5, no scene-scenelength/2 
+				data.out.sos[i,j] =  scenelength*index.act.sos
+				
+				
+				if(data[i,j,1]>val.act.sos) {  #~southern hem
+					
+					data.ly.dims = dim(data.ly)
+					data.ly.shifted = abind(data[i,j,2:data.ly.dims[3]],data[i,j,1]) 
+					#print(data.shifted)
+					data.ly.shifted = data.ly[i,j,]-data.ly.shifted
+	
+					#  get index of max inflection 
+					data.ly.shifted.max = which.max(data.ly.shifted)
+					print(data.ly.shifted.max)
+					val.act.eos <- (data.ly[i,j,data.ly.shifted.max]+data.ly[i,j,data.ly.shifted.max+1])/2
+					index.max.eos <- min(which(data[i,j,] <= val.act.eos))
+					index.min.eos <- index.max.eos-1					
+					
 				}
-				else {
-					index.max.sos <- min(which(data[i,j,] >= val.act))
-					index.min.sos <- index.max.sos-1
-					index.min.eos <- max(which(data[i,j,] >= val.act))
+				else { #~northern hem
+					val.act.eos <- val.act.sos
+					index.min.eos <- max(which(data[i,j,] >= val.act.sos))
 					index.max.eos <- index.min.eos+1
 				}
-				if(index.min.sos==0) {
-					val.min.sos = data.ly[i,j,data.dims[3]]	
-				}
-				else {
-					val.min.sos = data[i,j,index.min.sos]					
-				}
-				if(index.max.sos>data.dims[3]) {
-					val.max.sos = data.ny[i,j,1]
-				}
-				else {
-					val.max.sos = data[i,j,index.max.sos]					
-				}
-			
-				index.act.sos = index.min.sos + (val.act-val.min.sos)/(val.max.sos-val.min.sos)
-				data.out.sos[i,j] =  scenelength*index.act.sos-scenelength/2
-			
-			
+				
 				if(index.min.eos==0) {
 					val.min.eos = data.ly[i,j,data.dims[3]]	
 				}
@@ -133,12 +133,17 @@ for(year in year.min:year.max) {
 					val.max.eos = data[i,j,index.max.eos]					
 				}
 				
-				index.act.eos = index.min.eos + (val.act-val.min.eos)/(val.max.eos-val.min.eos) 
-				data.out.eos[i,j] =  scenelength*index.act.eos-scenelength/2
+				
+				
+				index.act.eos = index.min.eos + (val.act.eos-val.min.eos)/(val.max.eos-val.min.eos) 
+				#print(val.act.eos)
+				data.out.eos[i,j] =  scenelength*index.act.eos
+				
+				
 				if(i==246 && j == 231 && year == 1989) {
-					print(index.act.sos)
-					print(data.out.sos[i,j])
-					plotpixel(data[i,j,],index.act.sos,val.act,index.act.eos,val.act)
+					print(val.act.sos)
+					print(val.act.eos)
+					plotpixel(data[i,j,],index.act.sos,val.act.sos,index.act.eos,val.act.sos)
 				}
 			}
 		}
