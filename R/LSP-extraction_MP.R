@@ -42,7 +42,7 @@ for(year in year.min:year.max) {
 		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.max, sep="") 	
 	}
 	else {
-		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year+1, sep="") 
+		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year+1, sep="")
 	}
 	data.ny = read.ENVI(data.ny.name)
 	

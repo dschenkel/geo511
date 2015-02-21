@@ -149,7 +149,6 @@ for(year in year.min:year.max) {
 				#print(val.act.eos)
 				data.out.eos[i,j] =  scenelength*(index.act.eos-0.5)
 				
-				
 					if(i==99 && j == 201 && year == 1989) {
 						print(val.act.sos)
 						print(val.act.eos)
