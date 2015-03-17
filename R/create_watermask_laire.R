@@ -26,7 +26,7 @@ d.water[d.water > 60] <- 0
 
 d.water = rotate270(d.water)
 d.water.NHEM <- array(data=0, dim=c(360,720))
-d.water.NHEM[0:180,] <- d.water[0:180,] 
+d.water.NHEM[1:180,] <- d.water[1:180,] 
 d.water.SHEM <- array(data=0, dim=c(360,720))
 d.water.SHEM[181:360,] <- d.water[181:360,]
 

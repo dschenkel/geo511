@@ -16,33 +16,37 @@ plotpixel <- function(ts, scene.sos, value.sos, scene.eos, value.eos) {
 	   col=c("blue","green"));
 }
 
+hem = "NHEM"
+
 data.rootdir = "~/Documents/Uni/Masterarbeit/"
-data.mask <- read.ENVI(paste(data.rootdir,"watermask/watermask.envi",sep=""))
+data.mask <- read.ENVI(paste(data.rootdir,"watermask/watermask_",tolower(hem),".envi",sep=""))
 lainame= "LAIv3g"
 mindelta = 15
-year.min = 1988
-year.max = 1990
+year.min = 1982
+year.max = 1982
+
+
 
 for(year in year.min:year.max) {
 	data.meta <- nc_open(paste(data.rootdir, "LAIre/raw_data/Global-0.5x0.5.analysis.",year,".nc",sep=""))
 	data.meta.time <- length(ncvar_get(data.meta, "time"))
 	
-	data.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year, sep="") 
+	data.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year, sep="") 
 	data = read.ENVI(data.name)
 	
 	if(year==year.min) {
-		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.min, sep="") 	
+		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year.min, sep="") 	
 	}
 	else {
-		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year-1, sep="") 
+		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year-1, sep="") 
 	}
 	data.ly = read.ENVI(data.ly.name)
 	
 	if(year==year.max) {
-		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.max, sep="") 	
+		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year.max, sep="") 	
 	}
 	else {
-		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year+1, sep="")
+		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year+1, sep="")
 	}
 	data.ny = read.ENVI(data.ny.name)
 	
@@ -82,7 +86,7 @@ for(year in year.min:year.max) {
 					next()
 				}
 	
-				scenelength = data.meta.time/data.dims[3];
+				scenelength = data.meta.time/data.dims[3]
 				
 				#simplified assumption: height of season in january-ish (southern hem)
 				if(data[i,j,1]>data.midpoint[i,j]) {
@@ -117,9 +121,9 @@ for(year in year.min:year.max) {
 					val.max.sos = data[i,j,index.max.sos]					
 				}
 				#val.max.sos = data[i,j,index.max.sos]
-			
+								
 				index.act.sos = index.min.sos + (val.act.sos-val.min.sos)/(val.max.sos-val.min.sos)
-				data.out.sos[i,j] =  scenelength*index.act.sos-scenelength/2
+				data.out.sos[i,j] =  scenelength*index.act.sos-scenelength
 			
 			
 				if(index.min.eos==0) {
@@ -135,7 +139,7 @@ for(year in year.min:year.max) {
 					val.max.eos = data[i,j,index.max.eos]					
 				}
 				index.act.eos = index.min.eos + (val.act.eos-val.min.eos)/(val.max.eos-val.min.eos) 
-				data.out.eos[i,j] =  scenelength*index.act.eos-scenelength/2
+				data.out.eos[i,j] =  scenelength*index.act.eos-scenelength
 				if(i == 99 && j == 201 && year == 1989) {
 					print(val.act.sos)
 					print(val.act.eos)
@@ -155,8 +159,8 @@ for(year in year.min:year.max) {
 		}
 	}
 	
-	write.ENVI(data.out.sos,paste(data.rootdir,lainame,"/LSPout/",year,"_sos_MP",sep=""))
-	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",year,"_eos_MP",sep=""))
+	write.ENVI(data.out.sos,paste(data.rootdir,lainame,"/LSPout/",hem,"/MP/",lainame,"_",year,"_sos_MP",sep=""))
+	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",hem,"/MP/",lainame,"_",year,"_eos_MP",sep=""))
 	rm(data.out.eos, data.out.sos, data.ny, data.ly, data.midpoint, data.meta)
 }	
 warnings()

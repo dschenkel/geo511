@@ -2,6 +2,8 @@ library(abind)
 library(caTools)
 library(ncdf4)
 
+
+
 plotpixel <- function(ts, scene.sos, value.sos, scene.eos, value.eos) {
 
 	# Graph cars using a y axis that ranges from 0 to 12
@@ -14,35 +16,36 @@ plotpixel <- function(ts, scene.sos, value.sos, scene.eos, value.eos) {
 	
 }
 
+hem = "NHEM"
 data.rootdir = "~/Documents/Uni/Masterarbeit/"
-data.mask <- read.ENVI(paste(data.rootdir,"watermask/watermask.envi",sep=""))
+data.mask <- read.ENVI(paste(data.rootdir,"watermask/watermask_",tolower(hem),".envi",sep=""))
 lainame= "LAIv3g"
 mindelta = 15
 
-year.min = 1988
-year.max = 1990
+year.min = 1982
+year.max = 1982
 
 for(year in year.min:year.max) {
 	data.meta <- nc_open(paste(data.rootdir, "LAIre/raw_data/Global-0.5x0.5.analysis.",year,".nc",sep=""))
 	data.meta.time <- length(ncvar_get(data.meta, "time"))
 	
-	data.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year, sep="") 
+	data.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year, sep="") 
 	data = read.ENVI(data.name)
 	
 	#set year before and year after. if the year is the first/last year, use the current year as the year before/after
 	if(year==year.min) {
-		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.min, sep="") 	
+		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year.min, sep="") 	
 	}
 	else {
-		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year-1, sep="") 
+		data.ly.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year-1, sep="") 
 	}
 	data.ly = read.ENVI(data.ly.name)
 	
 	if(year==year.max) {
-		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year.max, sep="") 	
+		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year.max, sep="") 	
 	}
 	else {
-		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/smoothed/smoothed",year+1, sep="") 
+		data.ny.name <- paste(data.rootdir,lainame,"/hantsout/",hem,"/smoothed/smoothed",year+1, sep="") 
 	}
 	data.ny = read.ENVI(data.ny.name)
 	
@@ -101,7 +104,7 @@ for(year in year.min:year.max) {
 				val.act.sos = (val.min.sos+val.max.sos)/2
 			
 				#no need to subtract scene-length/2 b.c. max inflection is at index+0.5; so no index+0.5, no scene-scenelength/2 
-				data.out.sos[i,j] = scenelength*(index.min.sos)
+				data.out.sos[i,j] = scenelength*(index.min.sos-0.5)
 				
 				
 				if(data[i,j,1]>val.act.sos) {  #~southern hem
@@ -147,7 +150,7 @@ for(year in year.min:year.max) {
 				
 				index.act.eos = index.min.eos + (val.act.eos-val.min.eos)/(val.max.eos-val.min.eos) 
 				#print(val.act.eos)
-				data.out.eos[i,j] =  scenelength*(index.act.eos-0.5)
+				data.out.eos[i,j] =  scenelength*(index.act.eos-1)
 				
 					if(i==99 && j == 201 && year == 1989) {
 						print(val.act.sos)
@@ -167,7 +170,7 @@ for(year in year.min:year.max) {
 		}
 	}
 	
-	write.ENVI(data.out.sos,paste(data.rootdir,lainame,"/LSPout/",year,"_sos_MI",sep=""))
-	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",year,"_eos_MI",sep=""))
-	rm(data.out.eos, data.out.sos, data.ny, data.ly, data.midpoint, data.meta)
+	write.ENVI(data.out.sos,paste(data.rootdir,lainame,"/LSPout/",hem,"/MI/",lainame,"_",year,"_sos_MI",sep=""))
+	write.ENVI(data.out.eos,paste(data.rootdir,lainame,"/LSPout/",hem,"/MI/",lainame,"_",year,"_eos_MI",sep=""))
+	rm(data.out.eos, data.out.sos, data.ny, data.ly, data.meta)
 }	
