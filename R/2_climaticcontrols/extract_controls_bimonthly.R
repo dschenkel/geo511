@@ -4,7 +4,7 @@ library(fields)
 library(caTools)
 
 
-for(prod in c("MOIST_FAC", "TEMP_FAC")) {
+for(prod in c("LIGHT_FAC")) {
 	for(year in 1982:2011){
 		rootdir = paste("~/Documents/Uni/Masterarbeit/",sep="")
 		# ??open.ncdf
