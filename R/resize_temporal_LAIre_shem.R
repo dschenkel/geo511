@@ -3,7 +3,7 @@ library(raster)
 library(abind)
 minyear = 1982
 maxyear = 2011
-for (year in 1994:2011) {
+for (year in 1982:2011) {
 	#filename = paste("~/Documents/Uni/Masterarbeit/LAIv3g/LAIv3g_8211_INT_BSQ", sep="") 
 	filename.first = paste("~/Documents/Uni/Masterarbeit/LAIre/yearly_envi/Global-0.5x0.5.analysis.",year,"_rot.envi", sep="") 
 	

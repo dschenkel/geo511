@@ -3,28 +3,8 @@ rm(list = ls())
 #library(ncdf)
 library(raster)
 library(fields)
-input.envi = "~/Documents/Uni/Masterarbeit/LAIre/Global-0.5x0.5.analysis.1995.nc"
+input.envi = "~/Documents/Uni/Masterarbeit/bimonthly_changes/MOIST_FAC_1"
 
-# ??open.ncdf
-
-d.lat <- get.var.ncdf(nc, "lat")
-d.lon <- get.var.ncdf(nc, "lon")
-d.time <- get.var.ncdf(nc, "time")
-d <- get.var.ncdf(nc, "PFT_PCT")
-d.water <- d[,,35]
-#d.water
-max(d.water)
-d.water[d.water <= 99] <- 1
-d.water[d.water > 99] <- 0
-
-d.waterrst = raster(t(d.water))
-
-# specify extent and projection
-extent(d.waterrst) <- extent(c(-180, 180, -90, 90))
-projection(d.waterrst) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
-
-filename <- "~/Documents/Uni/Masterarbeit/watermask/watermask"
-writeRaster(d.waterrst, filename=filename, format="ENVI", overwrite=TRUE)
 
 image.plot(d.lon, d.lat, d.water)
 

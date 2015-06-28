@@ -10,6 +10,7 @@
 #
 
 param = 7
+param.name = "GSL"
 
 library(caTools)
 library(raster)
@@ -42,11 +43,11 @@ for (meth in c("MP", "MI")) {
 	}
 	print("finished_years")
 	out.3g = days_per_decade(mtrx.lai3g)
-	outname.3g = paste("~/Documents/Uni/Masterarbeit/1_LAI_comparison/decade_change/LAI3g/LAI3g_changepdec_",meth,sep="")
+	outname.3g = paste("~/Documents/Uni/Masterarbeit/1_LAI_comparison/decade_change/LAI3g/LAI3g_changepdec_",param.name,"_",meth,sep="")
 	write.ENVI(out.3g, outname.3g, interleave = "bsq" ) 
 	print("lai3g done")
 	out.re = days_per_decade(mtrx.laire)
-	outname.re = paste("~/Documents/Uni/Masterarbeit/1_LAI_comparison/decade_change/LAIre/LAIre_changepdec_",meth,sep="")
+	outname.re = paste("~/Documents/Uni/Masterarbeit/1_LAI_comparison/decade_change/LAIre/LAIre_changepdec_",param.name,"_",meth,sep="")
 	write.ENVI(out.re, outname.re, interleave = "bsq" ) 
 	
 	print("laire done")
