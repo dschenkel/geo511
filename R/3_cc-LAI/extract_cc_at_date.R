@@ -148,8 +148,8 @@ for(param in c(1,4)) {
 			table.laire[counter,prod] <- cor(as.vector(mtrx.out.laire),as.vector(mtrx.laire),method="spearman",use="pairwise.complete.obs")
 			table.lai3g[counter,prod] <- cor(as.vector(mtrx.out.lai3g),as.vector(mtrx.lai3g),method="spearman",use="pairwise.complete.obs")
 			
-			write.ENVI(mtrx.out.laire, paste(rootdir,"3_cc-LAI/LAI3g/monthly_",prod,"_at_",param.name[param],"_",year, sep=""), interleave = "bsq" ) 
-			write.ENVI(mtrx.out.lai3g, paste(rootdir,"3_cc-LAI/LAIre/monthly_",prod,"_at_",param.name[param],"_",year, sep=""), interleave = "bsq" ) 
+			write.ENVI(mtrx.out.lai3g, paste(rootdir,"3_cc-LAI/LAI3g/monthly_",prod,"_at_",param.name[param],"_",year, sep=""), interleave = "bsq" ) 
+			write.ENVI(mtrx.out.laire, paste(rootdir,"3_cc-LAI/LAIre/monthly_",prod,"_at_",param.name[param],"_",year, sep=""), interleave = "bsq" ) 
 
 			rm(mtrx.cc.cur, mtrx.cc.prev, mtrx.cc.next)
 		}

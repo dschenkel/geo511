@@ -11,8 +11,9 @@
 
 library(caTools)
 library(raster)
-source("../general_functions.R")
+source("general_functions.R")
 
+annual = TRUE
 
 for(prod in c("TEMP_FAC","MOIST_FAC","LIGHT_FAC")) {
 	mtrx.sos.laire <- array(dim=c(360,720,30))
@@ -34,23 +35,29 @@ for(prod in c("TEMP_FAC","MOIST_FAC","LIGHT_FAC")) {
 	}
 	print(paste("finished_years",prod))
 	
+	if(annual == TRUE) {
+		rootdir = "~/Documents/Uni/Masterarbeit/3_cc-LAI/monthly_annual_change_signf/"
+	}
+	else {
+		rootdir = "~/Documents/Uni/Masterarbeit/3_cc-LAI/monthly_decadal_change/"
+	}
 	out.sos.3g = days_per_decade(mtrx.sos.lai3g)
-	outname.sos.3g = paste("~/Documents/Uni/Masterarbeit/3_cc-LAI/monthly_decadal_change/LAI3g_decadal_change_SOS_",prod,sep="")
+	outname.sos.3g = paste(rootdir,"LAI3g_",ifelse(annual==TRUE,"annual","decadal"),"_change_SOS_",prod,sep="")
 	write.ENVI(out.sos.3g, outname.sos.3g, interleave = "bsq" ) 
 	print(paste("lai3g SOS done",prod))
 	
 	out.eos.3g = days_per_decade(mtrx.eos.lai3g)
-	outname.eos.3g = paste("~/Documents/Uni/Masterarbeit/3_cc-LAI/monthly_decadal_change/LAI3g_decadal_change_EOS_",prod,sep="")
+	outname.eos.3g = paste(rootdir,"LAI3g_",ifelse(annual==TRUE,"annual","decadal"),"_change_EOS_",prod,sep="")
 	write.ENVI(out.eos.3g, outname.eos.3g, interleave = "bsq" ) 
 	print(paste("lai3g EOS done",prod))
 	
 	out.sos.re = days_per_decade(mtrx.sos.laire)
-	outname.sos.re = paste("~/Documents/Uni/Masterarbeit/3_cc-LAI/monthly_decadal_change/LAIre_decadal_change_SOS_",prod,sep="")
+	outname.sos.re = paste(rootdir,"LAIre_",ifelse(annual==TRUE,"annual","decadal"),"_change_SOS_",prod,sep="")
 	write.ENVI(out.sos.re, outname.sos.re, interleave = "bsq" ) 
 	print(paste("laire SOS done",prod))	
 	
 	out.eos.re = days_per_decade(mtrx.eos.laire)
-	outname.eos.re = paste("~/Documents/Uni/Masterarbeit/3_cc-LAI/monthly_decadal_change/LAIre_decadal_change_EOS_",prod,sep="")
+	outname.eos.re = paste(rootdir,"LAIre_",ifelse(annual==TRUE,"annual","decadal"),"_change_EOS_",prod,sep="")
 	write.ENVI(out.eos.re, outname.eos.re, interleave = "bsq" ) 
 	print(paste("laire EOS done",prod))
 }

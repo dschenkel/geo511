@@ -9,12 +9,12 @@
 # ...
 #
 
-param = 7
-param.name = "GSL"
+param = 1
+param.name = "SOS"
 
 library(caTools)
 library(raster)
-source("../general_functions.R")
+source("general_functions.R")
 
 
 for (meth in c("MP", "MI")) {

@@ -28,12 +28,12 @@ print("finished_years")
 #mtrx.stack[155,360,]
 mtrx.out.uchanges = apply(mtrx.stack,c(1,2),function(x) length(unique(x)))
 #days_per_decade.proc(mtrx.stack[90,470,])
-diff(mtrx.stack[mtrx.out.uchanges==2])
+#diff(mtrx.stack[mtrx.out.uchanges==2])
 
 
-mtrx.out.diff_chng = apply(mtrx.stack,c(1,2),)
-mtrx.out.nchanges = apply(mtrx.out.diff_chng,c(1,2),function(x) length(x[x>0]))
-mtrx.out.nchanges
+#mtrx.out.diff_chng = apply(mtrx.stack,c(1,2),)
+#mtrx.out.nchanges = apply(mtrx.out.diff_chng,c(1,2),function(x) length(x[x>0]))
+#mtrx.out.nchanges
 #mtrx.out.nchanges = days_per_decade(mtrx.stack)
 filename.out.uchanges = paste("~/Documents/Uni/Masterarbeit/2_controls/unique_dominating_factors",sep="")
 write.ENVI(mtrx.out.uchanges,filename.out.uchanges,interleave = "bsq")

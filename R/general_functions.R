@@ -7,6 +7,9 @@ library(stats)
 library(zoo)
 
 
+
+
+
 correlate_2d <- function(map1, map2, namelist, mask ){
 	
    # stopifnot(checkDim3(A,B))
@@ -17,7 +20,7 @@ correlate_2d <- function(map1, map2, namelist, mask ){
 	colnames(datafr) <- c(namelist$map1,namelist$map2)
 	#print(A.vec)
 	#print(B.vec)
-	#cor = cor(A.vec,B.vec,method="spearman",use="pairwise.complete.obs")
+	#cor = cor(A.vec,B.vec,method="pearson",use="pairwise.complete.obs")
 	#print(cor)
 	#print(cor.test(A.vec,B.vec))
 	lm.out = lm(datafr)
@@ -36,14 +39,29 @@ correlate_2d <- function(map1, map2, namelist, mask ){
 	#return(object)	
 }
 
-days_per_decade.proc <- function(vector, years) {
+days_per_decade.proc <- function(vector, years, annual) {
 	years = 1982:2011
 	out = lm(vector ~ years)
-	ndays = out$coefficients["years"]*10
-	return(ndays)
+	if(annual == TRUE) {
+		fac = 1.0
+	} else {
+		fac = 10.0
+	}
+	sout = summary(out)
+	if(is.na(sout$coefficients["years",4])) {
+		return(NA)
+	}
+	#print(sout$coefficients["years",4])
+	if(sout$coefficients["years",4]<=0.05) {
+		ndays = out$coefficients["years"]*fac
+		return(ndays)
+	}
+	else {
+		return(NA)
+	}
 }
 
-days_per_decade <- function(map) {
+days_per_decade <- function(map,annual=FALSE) {
 	map.dim = dim(map)
 	output = array(dim=c(map.dim[1],map.dim[2]))
 	for(i in 1:map.dim[1]) {
@@ -58,14 +76,13 @@ days_per_decade <- function(map) {
 					#index(zVec) <- zVec[,1]
 					zVec_approx <- na.approx(zVec)
 					
-					output[i,j] = days_per_decade.proc(zVec_approx)
-					} else {
-						output[i,j] = days_per_decade.proc(vec)
-					}
+					output[i,j] = days_per_decade.proc(zVec_approx,annual=annual)
+				} else {
+					output[i,j] = days_per_decade.proc(vec,annual=annual)
+				}
 			}
 		}
 	}
-	
 	return(output)
 }
 
