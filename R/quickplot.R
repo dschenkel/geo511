@@ -13,8 +13,6 @@ library(mapdata)
 library(maptools)
 library(RColorBrewer)
 
-#filename = "~/Documents/Uni/Masterarbeit/2_controls/yearly_dominating/1982_dominating_control"
-#mtrx = read.ENVI(filename)
 
 
 smooth_image <- function(rstr,x_win,y_win) {
@@ -102,9 +100,9 @@ quickplot <- function(map, classes, classes.names, colors, outname=FALSE,smoothi
 	
 	rstr <- ratify(rstr)
 
-
 	rat <- levels(rstr)[[1]]
-
+	
+	
 	rat$classes <- classes.names
 	levels(rstr) <- rat
 	
@@ -112,9 +110,18 @@ quickplot <- function(map, classes, classes.names, colors, outname=FALSE,smoothi
 	    width = 850, height = 480, units = "px",
 	     bg = "white")
 		 
-	#poly <- boundary_layer(rstr)
 
-	p0 <- levelplot(rstr, pretty=TRUE, col.regions=colors) #+ layer(sp.polygons(poly))
+		 wld <- map('world', interior=F,boundary=T, xlim=c(-180,180), 
+		 ylim=c(-90,90),plot=FALSE)
+
+		 wld <- data.frame(lon=wld$x, lat=wld$y)
+
+
+		 #?maps::map
+
+	p0 <- levelplot(rstr, col.regions=colors) +
+   xyplot(lat ~ lon, wld, type='l', lty=1, lwd=1, col='black')
+
 	
 	print(p0)
 	
@@ -132,5 +139,8 @@ quickplot <- function(map, classes, classes.names, colors, outname=FALSE,smoothi
 	
 	#print(p0)
 }
+
+#filename = "~/Documents/Uni/Masterarbeit/2_controls/yearly_dominating/1982_dominating_control"
+#mtrx = read.ENVI(filename)
 
 #quickplot(mtrx,classes=FALSE, smoothing=TRUE,outname="/Users/davidschenkel/Documents/Uni/Masterarbeit/test2.png")

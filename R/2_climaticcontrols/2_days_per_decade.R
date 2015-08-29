@@ -3,7 +3,7 @@
 
 library(caTools)
 library(raster)
-source("../general_functions.R")
+source("general_functions.R")
 
 annual = FALSE
 
@@ -13,8 +13,8 @@ mtrx.lfac <- array(dim=c(360,720,30,24))
 
 cat("go")
 for (year in 1982:2011) {
-	filename.tfac = paste("~/Documents/Uni/Masterarbeit/climatic_controls/MOIST_FAC/",year,"_MOIST_FAC", sep="") 
-	filename.mfac = paste("~/Documents/Uni/Masterarbeit/climatic_controls/TEMP_FAC/",year,"_TEMP_FAC", sep="")
+	filename.mfac = paste("~/Documents/Uni/Masterarbeit/climatic_controls/MOIST_FAC/",year,"_MOIST_FAC", sep="") 
+	filename.tfac = paste("~/Documents/Uni/Masterarbeit/climatic_controls/TEMP_FAC/",year,"_TEMP_FAC", sep="")
 	#filename.lfac = paste("~/Documents/Uni/Masterarbeit/climatic_controls/LIGHT_FAC/",year,"_LIGHT_FAC", sep="")
 
 	mtrx.tfac.temp = read.ENVI(filename.tfac) 

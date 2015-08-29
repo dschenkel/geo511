@@ -52,7 +52,7 @@ days_per_decade.proc <- function(vector, years, annual) {
 		return(NA)
 	}
 	#print(sout$coefficients["years",4])
-	if(sout$coefficients["years",4]<=0.05) {
+	if(sout$coefficients["years",4]<=0.1) {
 		ndays = out$coefficients["years"]*fac
 		return(ndays)
 	}

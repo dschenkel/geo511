@@ -22,8 +22,8 @@ for(prod in c("LIGHT_FAC")) {
 		}
 
 		## Create a raster stack from these
-		rS <- stack( mget( paste0("r",3:362) , envir = .GlobalEnv ) )	## Make 12 rasters, maybe one for each month of the year
-		#rstrbrick
+		rS <- stack( mget( paste0("r",3:362) , envir = .GlobalEnv ) )	
+
 		rMean <- calc( rS , fun = function(x){ by(x , c( rep( 1:24 , each=15 ) ) , mean ) } )
 	
 	

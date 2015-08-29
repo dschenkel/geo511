@@ -1,6 +1,35 @@
 source("quickplot.R")
 month <- c("jana","janb","feba","febc","mara","marb","apra","aprb","maya","mayb","juna","junb","jula","julb","auga","augb","sepa","sepb","octa","octb","nova","novb","deca","decb")
 
+for(prod in c("TEMP_FAC","MOIST_FAC")) {
+	mtrx.seasonal = matrix(0,nrow=360,ncol=720)
+	
+	for(i in 1:24) {
+		
+
+		filename.wtr = "~/Documents/Uni/Masterarbeit/watermask/watermask.envi"
+		mask = read.ENVI(filename.wtr)
+		mask[mask==0] <- NA
+		filename = paste("~/Documents/Uni/Masterarbeit/2_controls/bimonthly_changes/",prod,"_",i,sep="")
+		mtrx = read.ENVI(filename) #in annual percent
+		
+		mtrx.n = mtrx
+		mtrx.n[is.na(mtrx.n)] <- 0
+		mtrx.seasonal = mtrx.seasonal + mtrx.n
+				
+		if(i %% 6 == 0) {
+			mtrx.seasonal = (mtrx.seasonal*mask)/6
+			classes = classify_image.div(mtrx.seasonal,9,0.01)
+			classes.names = name_classes(classes)
+			colorPal = brewer.pal(9,"BrBG")
+			filename.out = paste("~/Documents/Uni/Masterarbeit/2_controls/bimonthly_changes/plots/quarter_",prod,"_",i,".png",sep="")
+			quickplot(mtrx.seasonal, classes=classes, classes.names = classes.names, color=colorPal, smoothing=FALSE, outname=filename.out)
+			mtrx.seasonal = matrix(0,nrow=360,ncol=720)
+		}
+
+	}
+}
+
 
 filename.uchanges = "~/Documents/Uni/Masterarbeit/2_controls/unique_dominating_factors"
 mtrx = read.ENVI(filename.uchanges) 
@@ -24,17 +53,7 @@ for(prod in c("TEMP_FAC","MOIST_FAC")) {
 		mtrx = read.ENVI(filename) #in annual percent
 		
 		
-		if(i %% 6 == 0) {
-			classes = classify_image.div(mtrx.seasonal,5,0.05)
-			classes.names = name_classes(classes)
-			colorPal = brewer.pal(5,"BrBG")
-			filename.out = paste("~/Documents/Uni/Masterarbeit/2_controls/bimonthly_changes/plots/quarter_",prod,"_",i,".png",sep="")
-			quickplot(mtrx.seasonal, classes=classes, classes.names = classes.names, color=colorPal, smoothing=FALSE, outname=filename.out)
-			mtrx.seasonal = matrix(0,nrow=360,ncol=720)
-		}
-		mtrx.n = mtrx
-		mtrx.n[mtrx==NA] <- 0
-		mtrx.seasonal = mtrx.seasonal + mtrx.n
+
 	
 		#classes.min = min(mtrx,na.rm=TRUE)
 		#classes.max = max(mtrx,na.rm=TRUE)

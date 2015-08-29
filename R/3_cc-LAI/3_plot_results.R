@@ -1,4 +1,5 @@
-source("../quickplot.R")
+source("quickplot.R")
+
 
 for(phenop in c("SOS","EOS")) {
 	for(prod in c("LAIre","LAI3g")) {
@@ -24,6 +25,7 @@ for(phenop in c("SOS","EOS")) {
 	}
 }
 
+source("quickplot.R")
 
 #plot bimonthly decadal changes
 for(prod in c("MOIST_FAC","TEMP_FAC","LIGHT_FAC")) {
@@ -48,11 +50,11 @@ for(prod in c("MOIST_FAC","TEMP_FAC","LIGHT_FAC")) {
 			#paste(signif(classes.umid,digits=3),"-",signif(classes.max,digits=3))
 			#)
 			
-			classes = classify_image.div(mtrx,7,0.1)
+			classes = classify_image.div(mtrx,9,0.01)
 
 			classes.names = name_classes(classes)
 
-			colorPal=brewer.pal(7,"BrBG")
+			colorPal=brewer.pal(9,"BrBG")
 			quickplot(mtrx,classes=classes,color=colorPal,classes.names=classes.names, smoothing=FALSE, outname=filename.out)
 		
 		}
