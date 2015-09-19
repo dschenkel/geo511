@@ -1,0 +1,7 @@
+Introduction (771 words, 9%)
+Materials & Methods (1500, 18%)
+Results (1800, 21%)
+Discussion (3992,46%)
+Synthesis (386,6%)
+
+total 8500

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="289px" height="161px" viewBox="0 0 289 161" enable-background="new 0 0 289 161" xml:space="preserve">
+<polyline fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" points="25.125,2.25 25.125,136 314.5,136 "/>
+<text transform="matrix(1 0 0 1 259.3447 149.71)" font-family="'MyriadPro-Regular'" font-size="12">time</text>
+<text transform="matrix(4.666407e-11 -1.0394 1 4.489659e-11 20.625 80.5)" font-family="'MyriadPro-Regular'" font-size="12">LAI</text>
+<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="29.5,124.75 47.625,119.75 65.125,112.25 85.125,93.5 
+	100.125,64.75 105.75,51.625 116.375,18.5 123.875,11 136.375,6.625 151.375,9.75 157,14.125 175.125,28.5 187,38.5 198.25,52.875 
+	211.375,61.625 222.625,72.875 234.5,87.25 258.25,106.625 287,117.25 303.875,116.625 "/>
+<circle fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" cx="104.5" cy="54.125" r="3.75"/>
+<text transform="matrix(1 0 0 1 74.5166 57.875)" font-family="'MyriadPro-Regular'" font-size="12">SOS</text>
+<circle fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" cx="199.5" cy="54.125" r="3.75"/>
+<text transform="matrix(1 0 0 1 208.1504 57.875)" font-family="'MyriadPro-Regular'" font-size="12">EOS</text>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="104.5" y1="57.875" x2="104.5" y2="61.875"/>
+		
+			<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="7.7917,7.7917" x1="104.5" y1="69.667" x2="104.5" y2="128.104"/>
+		<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="104.5" y1="132" x2="104.5" y2="136"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="199.5" y1="57.875" x2="199.5" y2="61.875"/>
+		
+			<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="7.7917,7.7917" x1="199.5" y1="69.667" x2="199.5" y2="128.104"/>
+		<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="199.5" y1="132" x2="199.5" y2="136"/>
+	</g>
+</g>
+<circle fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" cx="95.187" cy="74.375" r="3.75"/>
+<text transform="matrix(1 0 0 1 93.8408 59.7988)" font-family="'MyriadPro-Regular'" font-size="6">1</text>
+<circle fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" cx="223.6" cy="74.375" r="3.75"/>
+<g>
+	<line fill="#FFFFFF" x1="95.187" y1="78.125" x2="95.187" y2="136"/>
+	<g>
+		<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="95.187" y1="78.125" x2="95.187" y2="82.125"/>
+		
+			<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="7.125,7.125" x1="95.187" y1="89.25" x2="95.187" y2="128.438"/>
+		<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="95.187" y1="132" x2="95.187" y2="136"/>
+	</g>
+</g>
+<line fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="8" x1="223.6" y1="78.125" x2="223.6" y2="136"/>
+<text transform="matrix(1 0 0 1 228.3496 59.7988)" font-family="'MyriadPro-Regular'" font-size="6">1</text>
+<text transform="matrix(1 0 0 1 67.7905 76.2012)" font-family="'MyriadPro-Regular'" font-size="12">SOS</text>
+<text transform="matrix(1 0 0 1 87.1147 78.125)" font-family="'MyriadPro-Regular'" font-size="6">2</text>
+<text transform="matrix(1 0 0 1 230.3945 78.125)" font-family="'MyriadPro-Regular'" font-size="12">EOS</text>
+<text transform="matrix(1 0 0 1 250.5938 80.0488)" font-family="'MyriadPro-Regular'" font-size="6">2</text>
+<g>
+	<line x1="111.708" y1="54.125" x2="111.708" y2="74.375"/>
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" x1="111.708" y1="56.388" x2="111.708" y2="72.112"/>
+		<g>
+			<path d="M111.708,54.125c-0.395,1.065-1.069,2.386-1.783,3.205l1.783-0.645l1.783,0.645
+				C112.777,56.511,112.103,55.19,111.708,54.125z"/>
+		</g>
+		<g>
+			<path d="M111.708,74.375c-0.395-1.065-1.069-2.386-1.783-3.205l1.783,0.645l1.783-0.645
+				C112.777,71.989,112.103,73.31,111.708,74.375z"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 114.0547 65.6875)"><tspan x="0" y="0" font-family="'MyriadPro-Regular'" font-size="12">∆</tspan><tspan x="6.828" y="0" font-family="'MyriadPro-Regular'" font-size="6">SOS</tspan></text>
+<g>
+	<line x1="190.396" y1="54.125" x2="190.396" y2="74.375"/>
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" x1="190.396" y1="56.388" x2="190.396" y2="72.112"/>
+		<g>
+			<path d="M190.396,54.125c-0.395,1.065-1.069,2.386-1.783,3.205l1.783-0.645l1.783,0.645
+				C191.464,56.511,190.79,55.19,190.396,54.125z"/>
+		</g>
+		<g>
+			<path d="M190.396,74.375c-0.395-1.065-1.069-2.386-1.783-3.205l1.783,0.645l1.783-0.645
+				C191.464,71.989,190.79,73.31,190.396,74.375z"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 172.1953 66.7236)"><tspan x="0" y="0" font-family="'MyriadPro-Regular'" font-size="12">∆</tspan><tspan x="6.828" y="0" font-family="'MyriadPro-Regular'" font-size="6">EOS</tspan></text>
+<g>
+	<line fill="#FFFFFF" x1="95.187" y1="141.554" x2="104.5" y2="141.554"/>
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" x1="97.45" y1="141.554" x2="102.237" y2="141.554"/>
+		<g>
+			<path d="M95.187,141.554c1.065,0.395,2.386,1.069,3.205,1.784l-0.645-1.784l0.645-1.783
+				C97.573,140.485,96.251,141.159,95.187,141.554z"/>
+		</g>
+		<g>
+			<path d="M104.5,141.554c-1.065,0.395-2.386,1.069-3.205,1.784l0.645-1.784l-0.645-1.783
+				C102.114,140.485,103.435,141.159,104.5,141.554z"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 93.8408 153.3335)"><tspan x="0" y="0" font-family="'MyriadPro-Regular'" font-size="12">∆t</tspan><tspan x="10.8" y="0" font-family="'MyriadPro-Semibold'" font-size="6">SOS</tspan></text>
+<g>
+	<line fill="#FFFFFF" x1="199.5" y1="141.554" x2="223.6" y2="141.554"/>
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" x1="201.764" y1="141.554" x2="221.336" y2="141.554"/>
+		<g>
+			<path d="M199.5,141.554c1.064,0.395,2.387,1.069,3.205,1.784l-0.645-1.784l0.645-1.783
+				C201.887,140.485,200.564,141.159,199.5,141.554z"/>
+		</g>
+		<g>
+			<path d="M223.6,141.554c-1.064,0.395-2.387,1.069-3.205,1.784l0.645-1.784l-0.645-1.783
+				C221.213,140.485,222.535,141.159,223.6,141.554z"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 201.25 155.1631)"><tspan x="0" y="0" font-family="'MyriadPro-Regular'" font-size="12">∆t</tspan><tspan x="10.799" y="0" font-family="'MyriadPro-Semibold'" font-size="6">EOS</tspan></text>
+</svg>
